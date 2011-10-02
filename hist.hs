@@ -10,6 +10,9 @@ normalize :: String -> String
 normalize word = map toLower (strip_cruft word) where
   strip_cruft word' = subRegex (mkRegex "[^a-zA-Z]*(.*[a-zA-Z])[^a-zA-Z]*") word' "\\1"
 
+isWord :: String -> Bool
+isWord str = any isAlpha str
+
 addOccurance :: Ord a => a -> Map.Map a Int -> Map.Map a Int
 addOccurance word m = Map.insert word (count + 1) m where
   count | Map.member word m = m Map.! word
@@ -33,7 +36,7 @@ main = do args <- getArgs
           let contents | length args > 0 = readFile $ head args
                        | otherwise = getContents
           text <- contents
-          let ws = map normalize (words text)
+          let ws = filter isWord $ map normalize (words text)
           let counts = countWords ws
           let max_key_length = maximum (map length (Map.keys counts))
           let max_count = maximum (Map.elems counts)
