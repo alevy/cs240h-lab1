@@ -29,8 +29,10 @@ histogram max_key_length max_count (key, count) = line_from_key_count where
 compareCounts :: (String, Int) -> (String, Int) -> Ordering
 compareCounts (_, count1) (_, count2) = compare count1 count2
 
-main = do (file_name:_) <- getArgs
-          text <- readFile file_name
+main = do args <- getArgs
+          let contents | length args > 0 = readFile $ head args
+                       | otherwise = getContents
+          text <- contents
           let ws = map normalize (words text)
           let counts = countWords ws
           let max_key_length = maximum (map length (Map.keys counts))

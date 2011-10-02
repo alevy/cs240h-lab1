@@ -1,0 +1,25 @@
+# Word Frequency Histogram (Lab 1) - CS240h: Functional Systems in Haskell
+
+Author: Amit Levy (levya@cs.stanford.edu)
+
+## Build Instructions
+
+Use `cabal` to build the word frequency histogram generator from the source directory:
+    
+    $ cabal configure
+    $ cabal build
+    
+This builds the executable `hist` into the dist directory. You should be able to run
+    
+    $ dist/build/hist/hist [text-file]
+    
+You can also install the binary by running:
+    
+    $ cabal install
+    
+
+## Usage
+    
+    hist [text-file]
+    
+If a file is given, `hist` will read it in as a text file. Otherwise it will read from standard input. 
