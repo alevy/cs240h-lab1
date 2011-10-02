@@ -10,13 +10,13 @@ normalize :: String -> String
 normalize word = map toLower (strip_cruft word) where
   strip_cruft word' = subRegex (mkRegex "[^a-zA-Z]*(.*[a-zA-Z])[^a-zA-Z]*") word' "\\1"
 
-add_occurance :: Ord a => a -> Map.Map a Int -> Map.Map a Int
-add_occurance word m = Map.insert word (count + 1) m where
+addOccurance :: Ord a => a -> Map.Map a Int -> Map.Map a Int
+addOccurance word m = Map.insert word (count + 1) m where
   count | Map.member word m = m Map.! word
         | otherwise = 0
 
-count_words :: Ord a => [a] -> Map.Map a Int
-count_words ws = foldr add_occurance Map.empty ws where
+countWords :: Ord a => [a] -> Map.Map a Int
+countWords ws = foldr addOccurance Map.empty ws where
 
 histogram :: Int -> Int -> (String, Int) -> String
 histogram max_key_length max_count (key, count) = line_from_key_count where
@@ -33,7 +33,7 @@ compareCounts (_, count1) (_, count2) = compare count1 count2
 main = do (file_name:_) <- getArgs
           text <- readFile file_name
           let ws = (map normalize (words text))
-          let counts = count_words ws
+          let counts = countWords ws
           let max_key_length = (maximum (map length (Map.keys counts)))
           let max_count = (maximum (Map.elems counts))
           let pairs =  reverse $ sortBy compareCounts $ toPairs counts
