@@ -37,4 +37,4 @@ main = do (file_name:_) <- getArgs
           let max_count = maximum (Map.elems counts)
           let pairs =  reverse $ sortBy compareCounts $ Map.toList counts
           let hist = map (histogram max_key_length max_count) pairs
-          sequence (map putStrLn hist)
+          mapM putStrLn hist
