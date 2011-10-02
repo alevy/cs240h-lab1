@@ -26,9 +26,6 @@ histogram max_key_length max_count (key, count) = line_from_key_count where
   nchars str c n | n <= 0 = str
                  | otherwise = nchars (c:str) c (n - 1)
 
-toPairs :: Map.Map String Int -> [(String, Int)]
-toPairs counts = Map.toList counts
-
 compareCounts :: (String, Int) -> (String, Int) -> Ordering
 compareCounts (_, count1) (_, count2) = compare count1 count2
 
@@ -38,6 +35,6 @@ main = do (file_name:_) <- getArgs
           let counts = countWords ws
           let max_key_length = maximum (map length (Map.keys counts))
           let max_count = maximum (Map.elems counts)
-          let pairs =  reverse $ sortBy compareCounts $ toPairs counts
+          let pairs =  reverse $ sortBy compareCounts $ Map.toList counts
           let hist = map (histogram max_key_length max_count) pairs
           sequence (map putStrLn hist)
