@@ -20,14 +20,14 @@ countWords ws = foldr addOccurance Map.empty ws where
 
 histogram :: Int -> Int -> (String, Int) -> String
 histogram max_key_length max_count (key, count) = line_from_key_count where
-  line_from_key_count = key ++ nchars " " ' ' (max_key_length - length key) ++
-                          nchars "" '#' ((80 - max_key_length - 1 *
-                                            count `div` max_count))
+  line_from_key_count = key ++ nchars " " ' ' (max_key_length - length(key)) ++
+                          nchars "" '#' ((80 - max_key_length - 1) *
+                                            count `div` max_count)
   nchars str c n | n <= 0 = str
                  | otherwise = nchars (c:str) c (n - 1)
 
 toPairs :: Map.Map String Int -> [(String, Int)]
-toPairs counts = Map.toList counts
+toPairs counts = Map.toList(counts)
 
 compareCounts :: (String, Int) -> (String, Int) -> Ordering
 compareCounts (_, count1) (_, count2) = compare count1 count2
