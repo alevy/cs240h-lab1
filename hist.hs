@@ -11,7 +11,7 @@ normalize word = map toLower (strip_cruft word) where
   strip_cruft word' = subRegex (mkRegex "[^a-zA-Z]*(.*[a-zA-Z])[^a-zA-Z]*") word' "\\1"
 
 isWord :: String -> Bool
-isWord str = any isAlpha str
+isWord = any isAlpha
 
 countWords :: Ord a => [a] -> Map.Map a Int
 countWords ws = foldr addOccurance Map.empty ws where
