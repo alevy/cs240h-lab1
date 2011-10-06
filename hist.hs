@@ -14,8 +14,8 @@ isWord :: String -> Bool
 isWord = any isAlpha
 
 countWords :: Ord a => [a] -> Map.Map a Int
-countWords ws = foldr addOccurance Map.empty ws where
-  addOccurance word m = Map.insert word (count + 1) m where
+countWords ws = foldl addOccurance Map.empty ws where
+  addOccurance m word = Map.insert word (count + 1) m where
     count | Map.member word m = m Map.! word
           | otherwise = 0
 
@@ -38,4 +38,4 @@ main = do args <- getArgs
           let max_key_length = maximum $ map (length . fst) pairs
           let max_count = maximum $ map snd pairs
           -- And output results
-          mapM (putStrLn . histogramLine max_key_length max_count) pairs
+          mapM_ (putStrLn . histogramLine max_key_length max_count) pairs
